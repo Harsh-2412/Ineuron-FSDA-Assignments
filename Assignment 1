@@ -1,0 +1,71 @@
+-----------------------------------------------------TASK 1----------------------------------------------------
+
+CREATE WAREHOUSE abc;      --creating new Warehouse
+CREATE DATABASE abc;        --creating database
+USE DATABASE abc;          -- using newyl created database
+
+
+ -- Creating table and inserting Data
+ 
+ 
+CREATE TABLE shopping_History(
+     product varchar(50) Not null,
+     quantity integer not null,
+     unit_price integer not null);
+     
+     INSERT INTO shopping_History(product, quantity, unit_price)
+     Values('MILK',9,20),
+            ('BREAD',3,25),
+            ('CURD',3,15),
+            ('MILK',1,20),
+            ('CURD',3,15),
+            ('BREAD',6,25),
+            ('BREAD',2,25),
+            ('CURD',4,15),
+            ('MILK',8,20),
+            ('MILK',5,20); 
+    
+--An SQL query that returns each product and the total amount of money spent on it. Rows ordered in descending alphabetical order
+    
+Select product,Sum(quantity*unit_price) AS Total_price
+from shopping_History
+Group By product
+Order by product DESC;
+
+------------------------------------------------Task 2-----------------------------------------------------
+ -- Creating table and inserting Data
+create table phones(
+  name varchar(20) not null unique, 
+  phone_number integer not null unique)     
+  
+  insert into phones(name, phone_number)    
+  values
+  ('Jack',1234),
+  ('Lena',3333),
+  ('Mark',9999),
+  ('Anna',7582);
+
+create table calls (
+id integer not null unique,
+ caller integer not null,
+callee integer not null,
+duration integer not null);    -
+
+insert into calls(id,caller,callee,duration)   
+values
+(25,1234,7582,8),
+(7,9999,7582,1),
+(18,9999,3333,4),
+(2,7582,3333,3),
+(3,3333,1234,1),
+(21,3333,1234,1);
+
+
+--- An query that returns the callers who had a total call duration of at least 10 minutes or more.
+
+SELECT p.name AS name
+FROM phones p 
+INNER JOIN calls c ON c.caller = p.phone_number  OR c.callee = p.phone_number
+GROUP BY name
+HAVING SUM(c.duration) >= 10
+ORDER BY name;
